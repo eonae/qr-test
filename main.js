@@ -1,7 +1,7 @@
 'use strict';
 
 const mediaConfig = {
-  video: { facingMode: { exact: 'front' } },
+  video: { facingMode: 'rear' },
   audio : false
 }
 
@@ -15,7 +15,8 @@ $stopBtn.addEventListener('click', () => stop());
 
 async function start() {
   try {
-    const cameras = await navigator.mediaDevices.enumerateDevices();
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const cameras = getCameras(devices);
     for (let cam of cameras) {
       print(cam.label ? cam.label : 'no label for device');
     }
@@ -26,6 +27,16 @@ async function start() {
   } catch (e) {
     handleError(e);
   }
+}
+
+function getCameras(devices) {
+  const cameras = [];
+  for (let device of devices) {
+    if (device.kind.toLowerCase() == 'videoinput') {
+      cameras.push(device);
+    }
+  }
+  return cameras;
 }
 
 function handleSuccess(stream) {
