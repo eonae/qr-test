@@ -15,7 +15,7 @@ async function init() {
   try {
     cameras = await getCameras();
     if (cameras.length === 0) {
-      throw new Error('No cameras detected');
+      throw new Exception('No cameras detected');
     }
     for (let cam of cameras) {
       print(JSON.stringify(cam));
