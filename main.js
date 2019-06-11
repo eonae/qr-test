@@ -1,48 +1,64 @@
 'use strict';
 
-// Put variables in global scope to make them available to the browser console.
 const mediaConfig = {
   video: { facingMode: 'user' },
   audio : false
 }
 
-function handleSuccess(stream) {
-  const video = document.querySelector('video');
-  const videoTracks = stream.getVideoTracks();
-  console.log('Got stream with constraints:', mediaConfig);
-  console.log(`Using video device: ${videoTracks[0].label}`);
-  window.stream = stream; // make variable available to browser console
-  video.srcObject = stream;
-}
+const $video = document.querySelector('video');
+const $info = document.getElementById('info');
+const $startBtn = document.getElementById('start-btn');
+const $stopBtn = document.getElementById('stop-btn');
 
-function handleError(error) {
-  if (error.name === 'ConstraintNotSatisfiedError') {
-    let v = constraints.video;
-    errorMsg(`The resolution ${v.width.exact}x${v.height.exact} px is not supported by your device.`);
-  } else if (error.name === 'PermissionDeniedError') {
-    errorMsg('Permissions have not been granted to use your camera and ' +
-      'microphone, you need to allow the page access to your devices in ' +
-      'order for the demo to work.');
-  }
-  errorMsg(error);
-}
+$startBtn.addEventListener('click', () => start());
+$stopBtn.addEventListener('click', () => stop());
 
-function errorMsg(error) {
-  const errorElement = document.querySelector('#errorMsg');
-  errorElement.innerHTML += `<p>${error}</p>`;
-  if (typeof error !== 'undefined') {
-    console.error(error);
-  }
-}
-
-async function init(e) {
+async function start() {
   try {
+    const cameras = await navigator.mediaDevices.enumerateDevices();
+    for (let cam of cameras) {
+      print(cam.label ? cam.label : 'no label for device');
+    }
     const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
     handleSuccess(stream);
-    e.target.disabled = true;
+    $startBtn.disabled = true;
+    $stopBtn.disabled = false;
   } catch (e) {
     handleError(e);
   }
 }
 
-document.querySelector('#showVideo').addEventListener('click', e => init(e));
+function handleSuccess(stream) {
+  const videoTracks = stream.getVideoTracks();
+  console.log('Got stream with constraints:', mediaConfig);
+  console.log(`Using video device: ${videoTracks[0].label}`);
+  $video.srcObject = stream;
+}
+
+function handleError(error) {
+  printError(error);
+}
+
+function stop() {
+  $video.srcObject = null;
+  $startBtn.disabled = false;
+  $stopBtn.disabled = true;
+}
+
+
+
+
+function print(message, isError = false) {
+  const $message = document.createElement('DIV');
+  if (isError) {
+    $message.classList.add('error-msg');
+  }
+  $message.textContent = message;
+  $info.appendChild($message);
+}
+
+function printError(error) {
+  print(error.message, true);
+}
+
+
