@@ -68,6 +68,7 @@ function getNextCameraId() {
   const nextCamera = cameras[0];
   if (nextCamera) {
     currentCamIndex = nextIndex;
+    print(currentCamIndex);
     return nextCamera.deviceId;
   } else {
     return null;
