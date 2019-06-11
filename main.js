@@ -24,12 +24,12 @@ function handleError(error) {
       'microphone, you need to allow the page access to your devices in ' +
       'order for the demo to work.');
   }
-  errorMsg(`getUserMedia error: ${error.name}`, error);
+  errorMsg(error);
 }
 
-function errorMsg(msg, error) {
+function errorMsg(error) {
   const errorElement = document.querySelector('#errorMsg');
-  errorElement.innerHTML += `<p>${msg}</p>`;
+  errorElement.innerHTML += `<p>${error}</p>`;
   if (typeof error !== 'undefined') {
     console.error(error);
   }
