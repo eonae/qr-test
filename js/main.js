@@ -41,8 +41,12 @@ async function start() {
   try {
     let nextDeviceId = getNextCameraId(); 
     print(nextDeviceId);
+    // const mediaConfig = {
+    //   video: { deviceId: nextDeviceId },
+    //   audio : false
+    // }
     const mediaConfig = {
-      video: { deviceId: nextDeviceId },
+      video: { facingMode: 'environment' },
       audio : false
     }
     const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
