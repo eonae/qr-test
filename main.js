@@ -18,7 +18,7 @@ async function start() {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const cameras = getCameras(devices);
     for (let cam of cameras) {
-      print(cam.label ? cam.label : 'no label for device');
+      print(JSON.stringify(cam));
     }
     const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
     handleSuccess(stream);
