@@ -16,4 +16,4 @@ const server = https.createServer({
   passphrase: 'farcajst'
 }, app);
 
-server.listen(1200, () => { console.log('Server is up!'); });
+server.listen(process.env.PORT || 1200, () => { console.log('Server is up!'); });
