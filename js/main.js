@@ -65,7 +65,7 @@ function getNextCameraId() {
   if (cameras.length <= nextIndex) {
     nextIndex = 0;
   }
-  const nextCamera = cameras[0];
+  const nextCamera = cameras[nextIndex];
   if (nextCamera) {
     currentCamIndex = nextIndex;
     print(currentCamIndex);
