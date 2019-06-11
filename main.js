@@ -37,8 +37,7 @@ function errorMsg(error) {
 
 async function init(e) {
   try {
-    const stream = await navigator.mediaDevices.get
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
     handleSuccess(stream);
     e.target.disabled = true;
   } catch (e) {
