@@ -1,15 +1,15 @@
 'use strict';
 
 // Put variables in global scope to make them available to the browser console.
-const constraints = window.constraints = {
-  audio: false,
-  video: true
-};
+const mediaConfig = {
+  video: { facingMode: 'user' },
+  audio : false
+}
 
 function handleSuccess(stream) {
   const video = document.querySelector('video');
   const videoTracks = stream.getVideoTracks();
-  console.log('Got stream with constraints:', constraints);
+  console.log('Got stream with constraints:', mediaConfig);
   console.log(`Using video device: ${videoTracks[0].label}`);
   window.stream = stream; // make variable available to browser console
   video.srcObject = stream;
@@ -37,6 +37,7 @@ function errorMsg(error) {
 
 async function init(e) {
   try {
+    const stream = await navigator.mediaDevices.get
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     handleSuccess(stream);
     e.target.disabled = true;
