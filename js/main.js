@@ -1,10 +1,12 @@
 'use strict';
 
+import "babel-polyfill";
+import { print, printError } from './print.js';
+import QrScanner from "qr-scanner";
+
 const $video = document.querySelector('video');
-const $info = document.getElementById('info');
-const $startBtn = document.getElementById('start-btn');
-const $stopBtn = document.getElementById('stop-btn');
-const $nextCamBtn = document.getElementById('next-cam-btn');
+const $scanBtn = document.getElementById('scan-btn');
+const $cancelBtn = document.getElementById('cancel-btn');
 
 let cameras = [];
 let currentCamIndex = -1;
@@ -20,15 +22,12 @@ async function init() {
     for (let cam of cameras) {
       print(JSON.stringify(cam));
     }
-    $startBtn.addEventListener('click', () => {
+    $scanBtn.addEventListener('click', () => {
       start();
-    })
-    $stopBtn.addEventListener('click', () => {
+    });
+    $cancelBtn.addEventListener('click', () => {
       stop();
-    });
-    $nextCamBtn.addEventListener('click', () => {
-      start();
-    });
+    })
     console.log('initialized successfully');
   }
   catch (e) {
@@ -39,12 +38,9 @@ async function init() {
 
 async function start() {
   try {
-    let nextDeviceId = getNextCameraId(); 
+    $scanBtn.disabled = true;
+    let nextDeviceId = getNextCameraId();
     print(nextDeviceId);
-    // const mediaConfig = {
-    //   video: { deviceId: nextDeviceId },
-    //   audio : false
-    // }
     const mediaConfig = {
       video: { facingMode: 'environment' },
       audio : false
@@ -52,9 +48,16 @@ async function start() {
     const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
     handleSuccess(stream);
     print('stream is go');
-    $startBtn.disabled = true;
-    $stopBtn.disabled = false;
+    const scanner = new QrScanner($video, result => {
+      print(result);
+      scanner.destroy();
+      stop();
+    });
+    scanner.start();
+    $scanBtn.classList.add('hidden');
+    $cancelBtn.classList.remove('hidden');
   } catch (e) {
+    $scanBtn.disabled = false;
     handleError(e);
   }
 }
@@ -91,6 +94,7 @@ function handleError(error) {
 
 function stop() {
   $video.srcObject = null;
-  $startBtn.disabled = false;
-  $stopBtn.disabled = true;
+  $cancelBtn.classList.add('hidden');
+  $scanBtn.classList.remove('hidden');
+  $scanBtn.disabled = false;
 }

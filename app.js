@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 
-app.use(express.static('./'));
+app.use(express.static('./dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 

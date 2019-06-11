@@ -1,4 +1,6 @@
-function print(message, isError = false) {
+const $info = document.getElementById('info');
+
+export function print(message, isError = false) {
   const $message = document.createElement('DIV');
   if (isError) {
     $message.classList.add('error-msg');
@@ -7,6 +9,6 @@ function print(message, isError = false) {
   $info.appendChild($message);
 }
 
-function printError(error) {
+export function printError(error) {
   print(error.message, true);
 }
