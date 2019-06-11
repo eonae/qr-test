@@ -1,7 +1,7 @@
 'use strict';
 
 const mediaConfig = {
-  video: { facingMode: 'user' },
+  video: { facingMode: { exact: 'front' } },
   audio : false
 }
 
