@@ -16,9 +16,11 @@ init();
 
 async function init() {
   try {
-    if (Notification.permission !== 'granted') {
+    print(Notification.permission);
+    // if (Notification.permission !== 'granted') {
       Notification.requestPermission();
-    }
+    // }
+    print(Notification.permission);
     cameras = await getCameras();
     if (cameras.length === 0) {
       throw new Exception('No cameras detected');

@@ -8437,69 +8437,69 @@ function _init() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+            (0, _print.print)(Notification.permission); // if (Notification.permission !== 'granted') {
 
-            if (Notification.permission !== 'granted') {
-              Notification.requestPermission();
-            }
+            Notification.requestPermission(); // }
 
-            _context.next = 4;
+            (0, _print.print)(Notification.permission);
+            _context.next = 6;
             return getCameras();
 
-          case 4:
+          case 6:
             cameras = _context.sent;
 
             if (!(cameras.length === 0)) {
-              _context.next = 7;
+              _context.next = 9;
               break;
             }
 
             throw new Exception('No cameras detected');
 
-          case 7:
+          case 9:
             _iteratorNormalCompletion = true;
             _didIteratorError = false;
             _iteratorError = undefined;
-            _context.prev = 10;
+            _context.prev = 12;
 
             for (_iterator = cameras[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               cam = _step.value;
               (0, _print.print)(JSON.stringify(cam));
             }
 
-            _context.next = 18;
+            _context.next = 20;
             break;
 
-          case 14:
-            _context.prev = 14;
-            _context.t0 = _context["catch"](10);
+          case 16:
+            _context.prev = 16;
+            _context.t0 = _context["catch"](12);
             _didIteratorError = true;
             _iteratorError = _context.t0;
 
-          case 18:
-            _context.prev = 18;
-            _context.prev = 19;
+          case 20:
+            _context.prev = 20;
+            _context.prev = 21;
 
             if (!_iteratorNormalCompletion && _iterator.return != null) {
               _iterator.return();
             }
 
-          case 21:
-            _context.prev = 21;
+          case 23:
+            _context.prev = 23;
 
             if (!_didIteratorError) {
-              _context.next = 24;
+              _context.next = 26;
               break;
             }
 
             throw _iteratorError;
 
-          case 24:
-            return _context.finish(21);
-
-          case 25:
-            return _context.finish(18);
-
           case 26:
+            return _context.finish(23);
+
+          case 27:
+            return _context.finish(20);
+
+          case 28:
             $scanBtn.addEventListener('click', function () {
               start();
             });
@@ -8507,20 +8507,20 @@ function _init() {
               stop();
             });
             console.log('initialized successfully');
-            _context.next = 34;
+            _context.next = 36;
             break;
 
-          case 31:
-            _context.prev = 31;
+          case 33:
+            _context.prev = 33;
             _context.t1 = _context["catch"](0);
             (0, _print.printError)(_context.t1);
 
-          case 34:
+          case 36:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 31], [10, 14, 18, 26], [19,, 21, 25]]);
+    }, _callee, null, [[0, 33], [12, 16, 20, 28], [21,, 23, 27]]);
   }));
   return _init.apply(this, arguments);
 }
