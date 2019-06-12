@@ -8418,6 +8418,7 @@ var $video = document.querySelector('video');
 var $scanBtn = document.getElementById('scan-btn');
 var $cancelBtn = document.getElementById('cancel-btn');
 var cameras = [];
+var scanner = null;
 var currentCamIndex = -1;
 init();
 
@@ -8532,7 +8533,7 @@ function _start() {
   _start = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee2() {
-    var nextDeviceId, mediaConfig, stream, scanner;
+    var nextDeviceId, mediaConfig, stream;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -8563,8 +8564,6 @@ function _start() {
                 });
               }
 
-              debugger;
-              scanner.destroy();
               stop();
             });
             scanner.start();
@@ -8650,6 +8649,11 @@ function handleError(error) {
 }
 
 function stop() {
+  if (scanner) {
+    scanner.destroy();
+    scanner = null;
+  }
+
   $video.srcObject = null;
   $cancelBtn.classList.add('hidden');
   $scanBtn.classList.remove('hidden');

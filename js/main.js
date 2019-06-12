@@ -9,6 +9,7 @@ const $scanBtn = document.getElementById('scan-btn');
 const $cancelBtn = document.getElementById('cancel-btn');
 
 let cameras = [];
+let scanner = null;
 let currentCamIndex = -1;
 
 init();
@@ -51,15 +52,13 @@ async function start() {
     const stream = await navigator.mediaDevices.getUserMedia(mediaConfig);
     handleSuccess(stream);
     print('stream is go');
-    const scanner = new QrScanner($video, result => {
+    scanner = new QrScanner($video, result => {
       print(result);
       if (Notification.permission === 'granted') {
         new Notification('QR-code scanned!', {
           data: result
         });
       }
-      debugger;
-      scanner.destroy();
       stop();
     });
     scanner.start();
@@ -102,6 +101,10 @@ function handleError(error) {
 }
 
 function stop() {
+  if (scanner) {
+    scanner.destroy();
+    scanner = null;
+  }
   $video.srcObject = null;
   $cancelBtn.classList.add('hidden');
   $scanBtn.classList.remove('hidden');
