@@ -8436,64 +8436,69 @@ function _init() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
+
+            if (Notification.permission !== 'granted') {
+              Notification.requestPermission();
+            }
+
+            _context.next = 4;
             return getCameras();
 
-          case 3:
+          case 4:
             cameras = _context.sent;
 
             if (!(cameras.length === 0)) {
-              _context.next = 6;
+              _context.next = 7;
               break;
             }
 
             throw new Exception('No cameras detected');
 
-          case 6:
+          case 7:
             _iteratorNormalCompletion = true;
             _didIteratorError = false;
             _iteratorError = undefined;
-            _context.prev = 9;
+            _context.prev = 10;
 
             for (_iterator = cameras[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               cam = _step.value;
               (0, _print.print)(JSON.stringify(cam));
             }
 
-            _context.next = 17;
+            _context.next = 18;
             break;
 
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](9);
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](10);
             _didIteratorError = true;
             _iteratorError = _context.t0;
 
-          case 17:
-            _context.prev = 17;
+          case 18:
             _context.prev = 18;
+            _context.prev = 19;
 
             if (!_iteratorNormalCompletion && _iterator.return != null) {
               _iterator.return();
             }
 
-          case 20:
-            _context.prev = 20;
+          case 21:
+            _context.prev = 21;
 
             if (!_didIteratorError) {
-              _context.next = 23;
+              _context.next = 24;
               break;
             }
 
             throw _iteratorError;
 
-          case 23:
-            return _context.finish(20);
-
           case 24:
-            return _context.finish(17);
+            return _context.finish(21);
 
           case 25:
+            return _context.finish(18);
+
+          case 26:
             $scanBtn.addEventListener('click', function () {
               start();
             });
@@ -8501,20 +8506,20 @@ function _init() {
               stop();
             });
             console.log('initialized successfully');
-            _context.next = 33;
+            _context.next = 34;
             break;
 
-          case 30:
-            _context.prev = 30;
+          case 31:
+            _context.prev = 31;
             _context.t1 = _context["catch"](0);
             (0, _print.printError)(_context.t1);
 
-          case 33:
+          case 34:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 30], [9, 13, 17, 25], [18,, 20, 24]]);
+    }, _callee, null, [[0, 31], [10, 14, 18, 26], [19,, 21, 25]]);
   }));
   return _init.apply(this, arguments);
 }
@@ -8551,6 +8556,14 @@ function _start() {
             (0, _print.print)('stream is go');
             scanner = new _qrScanner.default($video, function (result) {
               (0, _print.print)(result);
+
+              if (Notification.permission === 'granted') {
+                new Notification('QR-code scanned!', {
+                  data: result
+                });
+              }
+
+              debugger;
               scanner.destroy();
               stop();
             });
@@ -8670,7 +8683,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51579" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63580" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

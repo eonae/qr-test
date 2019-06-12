@@ -15,6 +15,9 @@ init();
 
 async function init() {
   try {
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
     cameras = await getCameras();
     if (cameras.length === 0) {
       throw new Exception('No cameras detected');
@@ -50,6 +53,12 @@ async function start() {
     print('stream is go');
     const scanner = new QrScanner($video, result => {
       print(result);
+      if (Notification.permission === 'granted') {
+        new Notification('QR-code scanned!', {
+          data: result
+        });
+      }
+      debugger;
       scanner.destroy();
       stop();
     });
